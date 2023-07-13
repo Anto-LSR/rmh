@@ -32,56 +32,65 @@ const SongSearch = () => {
     const handleSongTitleInputChange = (event) => {
         setSongTitleValue(event.target.value)
     }
-    const handleNewSongBtnClicked = () => {
-        //Si tous les critères sont remplis
-        if (category && categories.includes(category) && songTitleValue.length > 0) {
-            //On ajoute le morceau à la liste
-            const cookieData = handleGetCookie('categories', cookies)
-            if (cookieData.includes(category)) {
-                let currentSongs = handleGetCookie('songs', cookies)
-                if (!currentSongs) {
-                    setCookie('songs', [], cookies)
-                    currentSongs = handleGetCookie('songs', cookies)
-                }
-                let titleAlreadyExists = false;
-                currentSongs.forEach(song => {
-                    if (song.name == songTitleValue) {
-                        titleAlreadyExists = true;
-                        return
-                    }
-                })
-                if (!titleAlreadyExists)
-                    currentSongs.push({
-                        name: songTitleValue,
-                        url: songInputValue,
-                        category: category
-                    })
 
+    const getYouTubeVideoId = (url) => {
+        // Regular expression pattern to match YouTube URL formats
+        const pattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})$/;
+
+        // Extract the video ID using the pattern
+        const match = url.match(pattern);
+
+        // Return the video ID or null if no match found
+        return match ? match[1] : null;
+    }
+    const handleNewSongBtnClicked = () => {
+        // Check if all criteria are met
+        if (category && categories.includes(category) && songTitleValue.length > 0) {
+            // Get the existing songs
+            let currentSongs = handleGetCookie("songs", cookies);
+
+            // If the cookie doesn't exist, initialize it
+            if (!currentSongs) {
+                currentSongs = [];
+            }
+
+            // Check if a song with the same title already exists
+            const titleAlreadyExists = currentSongs.some((song) => song.name === songTitleValue);
+
+            if (!titleAlreadyExists) {
+                // Add the new song to the list
+                currentSongs.push({
+                    name: songTitleValue,
+                    url: songInputValue,
+                    id: getYouTubeVideoId(songInputValue),
+                    category: category
+                });
+
+                // Set the cookie
                 handleSetCookie(
-                    'songs',
+                    "songs",
                     currentSongs,
                     setCookie,
                     false,
                     false,
                     cookies
-                )
-               console.log(handleGetCookie('songs', cookies)); 
+                );
+
+                // Clear the error message
+                setErrorMessage("");
             }
-
-            setErrorMessage('')
         } else {
-            setErrorMessage("Something went wrong")
+            // Set the error message
+            setErrorMessage("Something went wrong");
         }
-        //Sinon on affiche l'erreur
-
-    }
+    };
 
     useEffect(() => {
         //On récupère les catégories
         const cookieData = handleGetCookie('categories', cookies)
         setCategories(cookieData ?? [])
         //Par défaut on selectionne la premiere catégorie
-        setCategory(cookieData[0] ?? null)
+        setCategory(cookieData ? cookieData[0] : null)
     }, [cookies]);
     return (
         <>

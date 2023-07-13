@@ -4,6 +4,8 @@ import ReactPlayer from 'react-player';
 const VideoPlayer = ({ video }) => {
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [volume, setVolume] = useState(1);
+  const [volumeinputValue, setVolumeInputValue] = useState(1)
   const playerRef = useRef(null);
 
   useEffect(() => {
@@ -22,9 +24,19 @@ const VideoPlayer = ({ video }) => {
     setMuted(!muted);
   };
 
+  const handleVolumeChange = (event) => {
+    const volume = mapValue(event.target.value);
+    setVolume(volume)
+  }
+
+  const mapValue = (value) => {
+    const outputValue = value / 100;
+    return outputValue.toFixed(1);
+  }
+
   return (
     <div>
-      <div style={{display : 'block'}}> 
+      <div style={{ display: 'block' }}>
         <ReactPlayer
           ref={playerRef}
           url={video ? video.url : ''}
@@ -32,11 +44,14 @@ const VideoPlayer = ({ video }) => {
           muted={muted}
           controls
           loop={true}
+          onError={(e) => alert(e)}
+          volume={volume}
         />
       </div>
-      
+
       <button onClick={handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
       <button onClick={handleMuteToggle}>{muted ? 'Unmute' : 'Mute'}</button>
+      <input type='range' min={1} max={100} onChange={handleVolumeChange}></input>
     </div >
   );
 };
