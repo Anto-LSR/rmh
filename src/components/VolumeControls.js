@@ -1,14 +1,20 @@
-import { HiOutlineVolumeUp } from "react-icons/hi"
 
-const VolumeControls = () => {
+import { BsVolumeMute, BsVolumeUp } from "react-icons/bs"
+
+const VolumeControls = ({ volume, muted, handleVolumeChange, handleMuteToggle }) => {
 
     return (
-        <div className="flex justify-end me-2">
+        <div className="flex justify-end items-center me-2">
             <div>
-                <HiOutlineVolumeUp />
+                {!muted ?
+                    <BsVolumeUp className="text-2xl" onClick={() => handleMuteToggle()} />
+
+                    :
+                    <BsVolumeMute className="text-2xl"  onClick={() => handleMuteToggle()} />
+                }
             </div>
-            <div>
-                <input type="range" min={0} max="100" value="50" className="" />
+            <div className="items-center flex">
+                <input className="ms-2 rangeInput h2 rounded" type='range' min={1} max={100} onChange={handleVolumeChange}></input>
             </div>
         </div>
     )

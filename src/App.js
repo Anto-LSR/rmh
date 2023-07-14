@@ -8,43 +8,43 @@ import CategoriesHandler from './components/CategoriesHandler'
 import SideBar from './components/SideBar'
 import Footer from './components/Footer'
 import MainComponent from './components/MainComponent'
+import { useCookies } from 'react-cookie';
+import { handleGetCookie } from './utils/cookieUtils'
 
 
 const App = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [cookies, setCookie] = useCookies();
 
   const handleVideoChange = (video) => {
     setCurrentVideo(video);
-    console.log(video);
   };
 
+  const handleCategoryChange = (category) => {
+    setCurrentCategory(category)
+  }
+
   useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.httpEquiv = 'Referrer-Policy';
-    meta.content = 'no-referrer-when-downgrade';
-    document.getElementsByTagName('head')[0].appendChild(meta);
+    if (currentCategory === null) {
+      const cookieCategories = handleGetCookie('categories', cookies);
+      if (cookieCategories)
+        setCurrentCategory(cookieCategories[0])
+    }
 
-    return () => {
-      document.getElementsByTagName('head')[0].removeChild(meta);
-    };
-  }, []);
-  // return (
-  //   <div>
-  //     <h1>RPG Music Handler v0.003</h1>
-  //     <VideoPlayer video={currentVideo} />
-
-  //     <CategoriesHandler/>
-  //     <SongSearch/>
-  //     <SongSelector handleVideoChange={ handleVideoChange}/>
-  //   </div>
-  // );
+  }, [cookies]);
   return (
-    <div style={{maxHeight : '100vh', 'overflow' : 'hidden'}}>
-      <div className="" style={{ display: 'flex'}}>
-        <SideBar />
-        <MainComponent />
+    <div style={{ maxHeight: '100vh', 'overflow': 'hidden' }} className="bg-[#000000] text-white">
+      <div className="" style={{ display: 'flex' }}>
+        <SideBar handleCategoryChange={handleCategoryChange} />
+        <MainComponent handleCategoryChange={handleCategoryChange} handleVideoChange={handleVideoChange} currentCategory={currentCategory} />
       </div>
-      <Footer/>
+      <Footer video={currentVideo} />
+      <VideoPlayer video={currentVideo} />
+      
+      {/* <CategoriesHandler />
+      <SongSearch />
+      <SongSelector handleVideoChange={handleVideoChange} /> */}
     </div>
   )
 };

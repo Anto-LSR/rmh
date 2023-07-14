@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.progressBar::-webkit-progress-value {
+    background-color: white;
+    /* border-radius: 20px; */
+    /* Set the desired color */
+}
+
+.progressBar::-moz-progress-bar {
+    background-color: white;
+    /* border-radius: 20px; */
+    /* Set the desired color */
+}
+
+.progressBar::-ms-fill {
+    background-color: white;
+    /* border-radius: 20px; */
+    /* Set the desired color */
+}
+
+.progressBar {
+    border-radius: 20px;
+    background-color: orange;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f100;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f100;
+  }
+
+
+
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      overflow: hidden;
+      width: 100px;
+      -webkit-appearance: none;
+      background-color: #808080;
+        
+    }
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 0.5rem;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 0.5rem;
+      cursor: ew-resize;
+      /* background: #434343; */
+      box-shadow: -80px 0 0 80px white;
+    }
+
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: white; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: white;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #43e5f7; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #9a905d;
+}
+
+
