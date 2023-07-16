@@ -6,7 +6,7 @@ import VideoPlayer from "./VideoPlayer"
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
-const Footer = (video) => {
+const Footer = (video, spacePressed) => {
     const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(true);
     const [volume, setVolume] = useState(1);
@@ -20,6 +20,9 @@ const Footer = (video) => {
         if (playerRef.current) {
             playerRef.current.seekTo(0);
             playerRef.current.seekTo(0, 'volume');
+        }
+        if(spacePressed){
+            handlePlayPause()
         }
     }, [video]);
 

@@ -4,11 +4,9 @@ import ReactPlayer from 'react-player';
 const VideoPlayer = ({ video, playing, muted, volume, handleProgress, handleDuration }) => {
   const playerRef = useRef(null);
 
-
-
   return (
     <div>
-      <div style={{ display: 'none', position : 'absolute' }}>
+      <div style={{ display: 'none', position: 'absolute' }}>
         <ReactPlayer
           ref={playerRef}
           url={video ? video.url : ''}

@@ -35,9 +35,9 @@ const Categories = () => {
                         <p>Catégories :  </p>
                         <ul>
                             {categories.map((category) => (
-                                <li key={category}>
+                                <li key={category.name}>
                                     <div style={{ display: 'flex' }}>
-                                        <p>{category}</p>
+                                        <p>{category.name}</p>
                                         <button onClick={() => handleCategoryDelete(category)}>Suppr.</button>
                                     </div>
                                 </li>

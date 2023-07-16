@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { handleGetCookie } from '../utils/cookieUtils'
 
-const SongSelector = ({handleVideoChange}) => {
+const SongSelector = ({ handleVideoChange }) => {
     const [cookies, setCookie] = useCookies();
     const [categories, setCategories] = useState([]);
     const [songs, setSongs] = useState([]);
@@ -12,7 +12,7 @@ const SongSelector = ({handleVideoChange}) => {
     useEffect(() => {
         // On récupère les catégories
         const cookieCategories = handleGetCookie('categories', cookies);
-        setCategories(cookieCategories??[]);
+        setCategories(cookieCategories ?? []);
         const cookieSongs = handleGetCookie('songs', cookies);
         setSongs(cookieSongs ?? []);
     }, [cookies]);
@@ -34,8 +34,8 @@ const SongSelector = ({handleVideoChange}) => {
             {songsAndCategories && canRender && (
                 <div>
                     {Object.entries(songsAndCategories).map(([category, songs]) => (
-                        <div key={category}>
-                            <h3>{category}</h3>
+                        <div key={category.name}>
+                            <h3>{category.name}</h3>
                             <ul>
                                 {songs.map((song, index) => (
                                     <button key={index} onClick={() => handleVideoChange(song)}>

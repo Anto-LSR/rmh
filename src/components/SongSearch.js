@@ -106,10 +106,10 @@ const SongSearch = () => {
                         <div>
                             <div style={{ display: 'flex' }}>
                                 <label>Catégorie :</label>
-                                <select value={category} onChange={handleCategoryChange}>
+                                <select value={category.name} onChange={handleCategoryChange}>
                                     {categories.map((category) => (
-                                        <option key={category} value={category}>
-                                            {category}
+                                        <option key={category.name} value={category.name}>
+                                            {category.name}
                                         </option>
                                     ))}
                                 </select>
