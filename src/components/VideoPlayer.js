@@ -5,8 +5,8 @@ const VideoPlayer = ({ video, playing, muted, volume, handleProgress, handleDura
   const playerRef = useRef(null);
 
   return (
-    <div>
-      <div style={{ display: 'none', position: 'absolute' }}>
+    <div className="">
+      <div className="h-1 w-1 bottom-2 opacity-1" style={{ display: 'block', position: 'absolute', top: "-200%" }}>
         <ReactPlayer
           ref={playerRef}
           url={video ? video.url : ''}

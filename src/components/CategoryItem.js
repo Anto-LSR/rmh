@@ -10,7 +10,7 @@ import {
 } from '@material-tailwind/react'
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 import { useCookies } from 'react-cookie';
-import { handleGetCookie, handleSetCookie } from '../utils/cookieUtils'
+import toast from 'react-hot-toast'
 
 
 const CategoryItem = ({ category, handleCategoryClick, currentCategory, handlePageChange, handleCategoryChange }) => {
@@ -45,6 +45,7 @@ const CategoryItem = ({ category, handleCategoryClick, currentCategory, handlePa
         setDeleteOpen(false)
         window.dispatchEvent(new Event('storage'))
         handleCategoryChange()
+        toast.success('Category edited')
     }
 
     const handleEditOpen = () => {
@@ -78,6 +79,9 @@ const CategoryItem = ({ category, handleCategoryClick, currentCategory, handlePa
 
         setEditOpen(false)
         window.dispatchEvent(new Event('storage'))
+        category = categories.find((obj) => obj.name === editInputValue)
+        handleCategoryChange(category)
+        toast.success('Category edited')
 
     }
 
@@ -88,8 +92,8 @@ const CategoryItem = ({ category, handleCategoryClick, currentCategory, handlePa
         setIsHovered(false)
     }
     return (
-        <div onMouseEnter={handleHMouseEnter} onMouseLeave={handleMouseLeave} className={`my-3 rounded-md p-2 justify-between flex items-center hover:bg-gray-700 hover:cursor-pointer transition ease-in-out ${currentCategory?.name == category?.name ? 'bg-gray-900' : ''}`} onClick={() => handleCategoryClick(category, 'mainComponent')}>
-            <div className="flex items-center gap-2">
+        <div onMouseEnter={handleHMouseEnter} onMouseLeave={handleMouseLeave} className={`my-3 rounded-md p-2 justify-between flex items-center hover:bg-gray-700 hover:cursor-pointer transition ease-in-out ${currentCategory?.name == category?.name ? 'bg-gray-900' : ''}`} >
+            <div className="flex items-center gap-2 w-full " onClick={() => handleCategoryClick(category, 'mainComponent')}>
                 <div className={`h-4 w-4 lg:h-10 lg:w-10 bg-${category.color}-500 rounded-md`}></div>
                 <div className=" hidden sm:hidden md:block lg:block md:text-xs"><p>{capitalize(category.name)}</p></div>
             </div>

@@ -10,7 +10,6 @@ const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
     const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(true);
     const [volume, setVolume] = useState(1);
-    const [volumeinputValue, setVolumeInputValue] = useState(1)
     const playerRef = useRef(null);
     const [progress, setProgress] = useState('')
     const [duration, setDuration] = useState('')
@@ -21,7 +20,6 @@ const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
             playerRef.current.seekTo(0);
             playerRef.current.seekTo(0, 'volume');
         }
-
     }, [video]);
 
     const handlePlayPause = () => {

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import VideoPlayer from './components/VideoPlayer';
 import SideBar from './components/SideBar'
 import Footer from './components/Footer'
 import MainComponent from './components/MainComponent'
-import { useCookies } from 'react-cookie';
-import { handleGetCookie } from './utils/cookieUtils'
-import VolumeControls from './components/VolumeControls';
+import toast, { Toaster } from 'react-hot-toast';
+
+const notify = () => toast('Here is your toast.');
 
 
 const App = () => {
 
   const [currentVideo, setCurrentVideo] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(null);
-  const [cookies, setCookie] = useCookies();
   const [page, setPage] = useState('mainComponent');
   const [spacePressed, setSpacePressed] = useState(false)
   const [categories, setCategories] = useState([])
@@ -23,6 +21,7 @@ const App = () => {
 
   const handleCategoryChange = (category) => {
     setCurrentCategory(category)
+    console.log(category);
   }
 
   const handlePageChange = (e) => {
@@ -72,22 +71,31 @@ const App = () => {
 
 
 
-  }, [cookies]);
+  }, [currentCategory]);
+
+
 
   return (
     <div className="min-safe-h-screen  bg-black-900 text-white flex flex-col inset-0 absolute">
       <div className="flex overflow-hidden "   >
+        <Toaster toastOptions={{
+          success: {
+            style: {
+              background: 'green',
+              color: 'white'
+            },
+            position: "top-right"
+          },
+          error: {
+            style: {
+              background: 'red',
+            },
+          },
+        }} />
         <SideBar handleCategoryChange={handleCategoryChange} handlePageChange={handlePageChange} page={page} currentCategory={currentCategory} categories={categories} handleCategoriesChange={handleCategoriesChange} />
         <MainComponent handleCategoryChange={handleCategoryChange} handleVideoChange={handleVideoChange} currentCategory={currentCategory} page={page} currentVideo={currentVideo} />
       </div>
-
       <Footer video={currentVideo} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} />
-
-      {/* <VideoPlayer video={currentVideo} /> */}
-
-      {/* <CategoriesHandler /> */}
-      {/* <SongSearch /> */}
-      {/* <SongSelector handleVideoChange={handleVideoChange} /> */}
     </div>
   )
 };

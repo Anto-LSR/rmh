@@ -1,13 +1,11 @@
-import { Button, Typography, Select, Option, IconButton, Input } from "@material-tailwind/react";
-import { useState, useRef, useEffect } from "react";
+import { Button, Typography, Select, Option, Input } from "@material-tailwind/react";
+import { useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { VscError } from "react-icons/vsc";
 import ReactPlayer from 'react-player';
-import { useCookies } from 'react-cookie';
-import { handleGetCookie, handleSetCookie } from '../utils/cookieUtils'
+import toast, { Toaster } from 'react-hot-toast';
 
 const AddSong = ({ categories }) => {
-    const [cookies, setCookie] = useCookies();
     const [songInputValue, setSongInputValue] = useState('')
     const [isPlayable, setIsPlayable] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -48,12 +46,12 @@ const AddSong = ({ categories }) => {
         if (categoryValue && songTitleValue.length > 0) {
             //let currentSongs = handleGetCookie("songs", cookies);
             let currentSongs = localStorage.getItem('songs')
-            
+
             // If the cookie doesn't exist, initialize it
             if (!currentSongs) {
                 currentSongs = [];
             } else { currentSongs = JSON.parse(currentSongs) }
-            
+
             console.log(currentSongs);
             // Check if a song with the same title already exists
             const titleAlreadyExists = currentSongs.some((song) => song.name === songTitleValue);
@@ -68,6 +66,7 @@ const AddSong = ({ categories }) => {
                 });
                 localStorage.setItem('songs', JSON.stringify(currentSongs))
                 window.dispatchEvent(new Event('storage'))
+                toast.success('Track added')
 
                 // Clear the error message
                 setErrorMessage("");
@@ -86,7 +85,7 @@ const AddSong = ({ categories }) => {
         setSongTitleValue(event.target.value)
     }
 
-    
+
 
     return (
         <div className="my-2 mx-2"  >

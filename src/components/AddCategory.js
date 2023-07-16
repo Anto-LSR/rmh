@@ -1,12 +1,9 @@
-import { Button, Typography, Select, Option, IconButton } from "@material-tailwind/react";
+import { Button, Typography, Select, Option } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
-import { BiBrush } from "react-icons/bi"
-import React, { useEffect, useState, useRef } from 'react';
-import { useCookies } from 'react-cookie';
-import { handleGetCookie, handleSetCookie } from '../utils/cookieUtils'
+import React, { useState, useRef } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const AddCategory = () => {
-    const [cookies, setCookie] = useCookies();
     const [select, setSelect] = useState('')
     const [newCategoryInputValue, setNewCategoryInputValue] = useState('');
     const [color, setColor] = useState('')
@@ -41,6 +38,7 @@ const AddCategory = () => {
             //handleGetCookie('categories', cookies)
             setNewCategoryInputValue('')
             setSelect('')
+            toast.success('Category added!')
         }
     };
 
