@@ -2,90 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
+.min-safe-h-screen {
+  /* equivalent to 100dvh in major browsers */
+  min-height: calc(100vh - env(safe-area-inset-bottom, 0) - env(safe-area-inset-top, 0));
+}
+
+.max-safe-h-screen {
+  /* equivalent to 100dvh in major browsers */
+  min-height: calc(100vh - env(safe-area-inset-bottom, 0) - env(safe-area-inset-top, 0));
+}
+.body{
+  box-sizing: border-box;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .min-safe-h-screen {
+    /* for ios safari 15, safe-area-inset-bottom is 0, so a special fix apply here */
+    min-height: -webkit-fill-available;
+  }
+  .max-safe-h-screen {
+    /* for ios safari 15, safe-area-inset-bottom is 0, so a special fix apply here */
+    max-height: -webkit-fill-available;
+  }
+}
+
 .progressBar::-webkit-progress-value {
-    background-color: white;
-    /* border-radius: 20px; */
-    /* Set the desired color */
+  background-color: white;
+  /* border-radius: 20px; */
+  /* Set the desired color */
 }
 
 .progressBar::-moz-progress-bar {
-    background-color: white;
-    /* border-radius: 20px; */
-    /* Set the desired color */
+  background-color: white;
+  /* border-radius: 20px; */
+  /* Set the desired color */
 }
 
 .progressBar::-ms-fill {
-    background-color: white;
-    /* border-radius: 20px; */
-    /* Set the desired color */
+  background-color: white;
+  /* border-radius: 20px; */
+  /* Set the desired color */
 }
 
 .progressBar {
-    border-radius: 20px;
-    background-color: orange;
+  border-radius: 20px;
+  background-color: orange;
 }
 
 /* width */
 ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f1f1f100;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
+}
+
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='range'] {
+    overflow: hidden;
+    width: 100px;
+    -webkit-appearance: none;
+    background-color: #808080;
+
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 0.5rem;
+    -webkit-appearance: none;
+    color: #13bba4;
+    margin-top: -1px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
     width: 10px;
+    -webkit-appearance: none;
+    height: 0.5rem;
+    cursor: ew-resize;
+    /* background: #434343; */
+    box-shadow: -80px 0 0 80px white;
   }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f100;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #f1f1f100;
-  }
-
-
-
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    input[type='range'] {
-      overflow: hidden;
-      width: 100px;
-      -webkit-appearance: none;
-      background-color: #808080;
-        
-    }
-    
-    input[type='range']::-webkit-slider-runnable-track {
-      height: 0.5rem;
-      -webkit-appearance: none;
-      color: #13bba4;
-      margin-top: -1px;
-    }
-    
-    input[type='range']::-webkit-slider-thumb {
-      width: 10px;
-      -webkit-appearance: none;
-      height: 0.5rem;
-      cursor: ew-resize;
-      /* background: #434343; */
-      box-shadow: -80px 0 0 80px white;
-    }
 
 }
+
 /** FF*/
 input[type="range"]::-moz-range-progress {
-  background-color: white; 
-}
-input[type="range"]::-moz-range-track {  
   background-color: white;
 }
+
+input[type="range"]::-moz-range-track {
+  background-color: white;
+}
+
 /* IE*/
 input[type="range"]::-ms-fill-lower {
-  background-color: #43e5f7; 
+  background-color: #43e5f7;
 }
-input[type="range"]::-ms-fill-upper {  
+
+input[type="range"]::-ms-fill-upper {
   background-color: #9a905d;
 }
 
+.rotateIcon {
+  animation: spin 2s infinite linear;
+}
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

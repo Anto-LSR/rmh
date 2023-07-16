@@ -13,7 +13,6 @@ const AddCategory = () => {
     const inputRef = useRef(null);
 
     const setSelectValue = (value) => {
-        console.log(value);
         setSelect(value);
         setColor(value)
     }
@@ -25,14 +24,21 @@ const AddCategory = () => {
             color: color
         }
 
-        console.log(category);
-
         if (newCategoryInputValue.trim().length > 0) {
             setNewCategoryInputValue(newCategoryInputValue);
             setColor(color)
 
-            handleSetCookie('categories', category, setCookie, true, false, cookies)
-            handleGetCookie('categories', cookies)
+            //handleSetCookie('categories', category, setCookie, true, false, cookies)
+            let categories = localStorage.getItem('categories')
+            if (!categories) {
+                categories = []
+            } else {
+                categories = JSON.parse(categories)
+            }
+            categories.push(category)
+            localStorage.setItem('categories', JSON.stringify(categories))
+            window.dispatchEvent(new Event('storage'))
+            //handleGetCookie('categories', cookies)
             setNewCategoryInputValue('')
             setSelect('')
         }

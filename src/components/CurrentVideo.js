@@ -6,12 +6,12 @@ const CurrentVideo = (video) => {
     const [currentVideo, setCurrentVideo] = useState(video)
 
     useEffect(() => {
-        setCurrentVideo(video.video.video)
+        setCurrentVideo(video.video)
     }, [video]);
 
     return (
 
-        <div className="flex items-center" >
+        <div className="flex items-center " >
             {currentVideo?.id && (
                 <>
                     <div className="me-2 ms-2">

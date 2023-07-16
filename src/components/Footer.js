@@ -6,7 +6,7 @@ import VideoPlayer from "./VideoPlayer"
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
-const Footer = (video, spacePressed) => {
+const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
     const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(true);
     const [volume, setVolume] = useState(1);
@@ -21,9 +21,7 @@ const Footer = (video, spacePressed) => {
             playerRef.current.seekTo(0);
             playerRef.current.seekTo(0, 'volume');
         }
-        if(spacePressed){
-            handlePlayPause()
-        }
+
     }, [video]);
 
     const handlePlayPause = () => {
@@ -54,14 +52,21 @@ const Footer = (video, spacePressed) => {
     const handleDuration = (duration) => {
         setDuration(duration)
     }
+
     return (
         <>
-            <div className="flex items-center grid grid-rows-1 grid-flow-col gap-4 bg-[#000000]" style={{ minHeight: '10vh' }} >
-                <CurrentVideo video={video}></CurrentVideo>
-                <PlayerControls handlePlayPause={handlePlayPause} playing={playing} secondsPlayed={secondsPlayed} duration={duration} progress={progress} video={video}/>
-                <VolumeControls volume={volume} muted={muted} handleVolumeChange={handleVolumeChange} handleMuteToggle={handleMuteToggle} />
+            <div className="flex items-center grid grid-rows-1 grid-flow-col gap-4 bg-[#000000] min-h-[10vh] max-h-[10vh]" >
+                <div className="hidden md:block lg:block">
+                    <CurrentVideo video={video}></CurrentVideo>
+                </div>
+                <div>
+                    <PlayerControls handlePlayPause={handlePlayPause} playing={playing} secondsPlayed={secondsPlayed} duration={duration} progress={progress} video={video} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} />
+                </div>
+                <div className="hidden lg:block">
+                    <VolumeControls volume={volume} muted={muted} handleVolumeChange={handleVolumeChange} handleMuteToggle={handleMuteToggle} />
+                </div>
             </div>
-            <VideoPlayer video={video.video} playing={playing} muted={muted} volume={volume} handleProgress={handleProgress} handleDuration={handleDuration} />
+            <VideoPlayer video={video} playing={playing} muted={muted} volume={volume} handleProgress={handleProgress} handleDuration={handleDuration} />
         </>
     )
 }

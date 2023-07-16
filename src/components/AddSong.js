@@ -15,7 +15,6 @@ const AddSong = ({ categories }) => {
     const [categoryValue, setCategoryValue] = useState('')
     const [songTitleValue, setSongTitleValue] = useState('')
 
-
     const handleSongInputChange = (event) => {
         setSongInputValue(event.target.value);
         setIsNotPlayable(false)
@@ -46,18 +45,16 @@ const AddSong = ({ categories }) => {
     }
 
     const handleSubmit = (e) => {
-        console.log(songInputValue);
-        console.log(categoryValue);
-        console.log(songTitleValue);
         if (categoryValue && songTitleValue.length > 0) {
-            let currentSongs = handleGetCookie("songs", cookies);
-            console.log('songs from cookies ', currentSongs);
-
+            //let currentSongs = handleGetCookie("songs", cookies);
+            let currentSongs = localStorage.getItem('songs')
+            
             // If the cookie doesn't exist, initialize it
             if (!currentSongs) {
                 currentSongs = [];
-            }
-
+            } else { currentSongs = JSON.parse(currentSongs) }
+            
+            console.log(currentSongs);
             // Check if a song with the same title already exists
             const titleAlreadyExists = currentSongs.some((song) => song.name === songTitleValue);
 
@@ -69,16 +66,8 @@ const AddSong = ({ categories }) => {
                     id: getYouTubeVideoId(songInputValue),
                     category: categoryValue
                 });
-
-                // Set the cookie
-                handleSetCookie(
-                    "songs",
-                    currentSongs,
-                    setCookie,
-                    false,
-                    false,
-                    cookies
-                );
+                localStorage.setItem('songs', JSON.stringify(currentSongs))
+                window.dispatchEvent(new Event('storage'))
 
                 // Clear the error message
                 setErrorMessage("");
@@ -97,6 +86,7 @@ const AddSong = ({ categories }) => {
         setSongTitleValue(event.target.value)
     }
 
+    
 
     return (
         <div className="my-2 mx-2"  >

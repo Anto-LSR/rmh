@@ -18,6 +18,8 @@ const VideoPlayer = ({ video, playing, muted, volume, handleProgress, handleDura
           onProgress={handleProgress}
           onDuration={handleDuration}
           progressInterval={100}
+          autoPlay
+          playsinline
         />
       </div>
 
