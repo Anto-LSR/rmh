@@ -7,6 +7,8 @@ import toast, { Toaster } from 'react-hot-toast';
 const notify = () => toast('Here is your toast.');
 
 
+
+
 const App = () => {
 
   const [currentVideo, setCurrentVideo] = useState(null);
@@ -14,6 +16,7 @@ const App = () => {
   const [page, setPage] = useState('mainComponent');
   const [spacePressed, setSpacePressed] = useState(false)
   const [categories, setCategories] = useState([])
+  
 
   const handleVideoChange = (video) => {
     setCurrentVideo(video);
@@ -29,7 +32,8 @@ const App = () => {
   }
 
   const handleSpacePress = () => {
-    setSpacePressed(!spacePressed)
+    if(document.activeElement.tagName !== 'INPUT')
+      setSpacePressed(!spacePressed)
   }
 
   const handleNextSong = () => {
@@ -68,15 +72,24 @@ const App = () => {
         setCurrentCategory(localCategories[0])
       setCategories(localCategories)
     }
-
-
-
   }, [currentCategory]);
 
+  useEffect(() => {
+    // Add keydown event listener when the component mounts
+    document.addEventListener('keydown', handleSpacePress);
+    
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleSpacePress);
 
+    };
+  }, [spacePressed]);
+
+
+ 
 
   return (
-    <div className="min-safe-h-screen  bg-black-900 text-white flex flex-col inset-0 absolute">
+    <div className="min-safe-h-screen max-w-screen overflow-x-hidden  bg-black-900 text-white flex flex-col inset-0 absolute">
       <div className="flex overflow-hidden "   >
         <Toaster toastOptions={{
           success: {
@@ -95,7 +108,7 @@ const App = () => {
         <SideBar handleCategoryChange={handleCategoryChange} handlePageChange={handlePageChange} page={page} currentCategory={currentCategory} categories={categories} handleCategoriesChange={handleCategoriesChange} />
         <MainComponent handleCategoryChange={handleCategoryChange} handleVideoChange={handleVideoChange} currentCategory={currentCategory} page={page} currentVideo={currentVideo} />
       </div>
-      <Footer video={currentVideo} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} />
+      <Footer video={currentVideo} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} spacePressed={spacePressed} />
     </div>
   )
 };

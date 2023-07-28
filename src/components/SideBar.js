@@ -4,6 +4,7 @@ import { handleGetCookie } from '../utils/cookieUtils';
 import { AiOutlineFolderAdd, AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import CategoryItem from "./CategoryItem";
+import {decryptString, encryptString} from "../utils/miscUtils.js"
 
 const SideBar = ({ handleCategoryChange, handlePageChange, page, currentCategory, categories, handleCategoriesChange }) => {
   const [storageChange, setStorageChange] = useState(false);
@@ -17,6 +18,20 @@ const SideBar = ({ handleCategoryChange, handlePageChange, page, currentCategory
   const handlelinkClick = (link) => {
     handlePageChange(link);
   };
+
+  const handleShareButton = () => {
+    let categories = JSON.parse(localStorage.getItem('categories'))
+    let songs = JSON.parse(localStorage.getItem('songs'))
+    const groupedSongs = categories.reduce((result, category) => {
+      const categorySongs = songs.filter((song) => song.category === category.name);
+      if (categorySongs) {
+        result[category.name] = categorySongs
+        return result;
+      }
+    }, {});
+  }
+
+
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -48,7 +63,7 @@ const SideBar = ({ handleCategoryChange, handlePageChange, page, currentCategory
           <span className="hidden sm:hidden md:block lg:block">Tracks</span>
           <AiOutlinePlus className="me-2 text-2xl " />
         </div>
-        <div onClick={() => handlelinkClick('share')} className={`text-gray-500 flex items-center hover:bg-white rounded-md hover:text-gray-900 transition ease-in-out cursor-pointer my-1 justify-between p-2 me-1 ${page === 'share' ? 'text-white' : ''}`}>
+        <div onClick={() => handleShareButton()} className={`text-gray-500 flex items-center hover:bg-white rounded-md hover:text-gray-900 transition ease-in-out cursor-pointer my-1 justify-between p-2 me-1 ${page === 'share' ? 'text-white' : ''}`}>
           <span className="hidden sm:hidden md:block lg:block"> Share</span>
           <BiShare className="me-2 text-2xl " />
         </div>

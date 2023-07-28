@@ -6,7 +6,7 @@ import VideoPlayer from "./VideoPlayer"
 import React, { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
-const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
+const Footer = ({ video, handleNextSong, handlePreviousSong, spacePressed }) => {
     const [playing, setPlaying] = useState(false);
     const [muted, setMuted] = useState(true);
     const [volume, setVolume] = useState(1);
@@ -21,6 +21,12 @@ const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
             playerRef.current.seekTo(0, 'volume');
         }
     }, [video]);
+
+    useEffect(() => {
+        if(video ){
+            setPlaying(!playing)
+        }
+    }, [spacePressed])
 
     const handlePlayPause = () => {
         setPlaying(!playing);
@@ -58,7 +64,7 @@ const Footer = ({ video, handleNextSong, handlePreviousSong }) => {
                     <CurrentVideo video={video}></CurrentVideo>
                 </div>
                 <div>
-                    <PlayerControls handlePlayPause={handlePlayPause} playing={playing} secondsPlayed={secondsPlayed} duration={duration} progress={progress} video={video} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} />
+                    <PlayerControls handlePlayPause={handlePlayPause} playing={playing} secondsPlayed={secondsPlayed} duration={duration} progress={progress} video={video} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} spacePressed={spacePressed} />
                 </div>
                 <div className="hidden lg:block">
                     <VolumeControls volume={volume} muted={muted} handleVolumeChange={handleVolumeChange} handleMuteToggle={handleMuteToggle} />

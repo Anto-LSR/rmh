@@ -16,31 +16,39 @@ const PlayerControls = ({ handlePlayPause, playing, secondsPlayed, duration, pro
         <div className="flex justify-center">
             <div>
                 <div className="flex justify-center items-center gap-3">
-                    <BsFillSkipStartFill className="text-2xl text-gray-500 hover:text-white" onClick={handlePreviousSong} />
-                    {!playing ?
+                    {
+                        video && (
+                            <BsFillSkipStartFill className="text-2xl text-gray-500 hover:text-white" onClick={handlePreviousSong} />
+                        )
+                    }
+                    {!playing  && video ?
                         <div onClick={() => handlePlayPause()} className="h-10 w-10 bg-white flex items-center justify-center rounded-full hover:scale-110 transition ease-in-out cursor-pointer">
                             <FaPlay className="ps-1 text-xl text-gray-900" />
                         </div>
                         :
-                        <div onClick={() => handlePlayPause()} className="h-10 w-10 bg-white flex items-center justify-center rounded-full hover:scale-110 transition ease-in-out cursor-pointer">
-                            <FaPause className="text-xl text-gray-900 " />
+                        <div onClick={() => handlePlayPause()} className={`h-10 w-10 ${video ? 'bg-white' : 'bg-gray-800'} flex items-center justify-center rounded-full ${video ? 'hover:scale-110 transition ease-in-out cursor-pointer' : ''}`}>
+                            <FaPause className={`text-xl ${video ? 'text-gray-900' : 'text-gray-700'}`}/>
                         </div>
 
                     }
-                    <BsFillSkipEndFill className="text-2xl text-gray-500 hover:text-white" onClick={handleNextSong} />
+                    {video &&
+                        <BsFillSkipEndFill className="text-2xl text-gray-500 hover:text-white" onClick={handleNextSong} />
+                    }
                 </div>
-                <div className="flex gap-2 items-center text-xs text-gray-500 hidden md:flex lg:flex">
-                    <span className="pt-1">
+                {video &&
+                    <div className="flex gap-2 items-center text-xs text-gray-500 hidden md:flex lg:flex">
+                        <span className="pt-1">
 
-                        {secondsPlayed ? convertSecondsToMinutes(secondsPlayed?.toFixed(0)) : video ? '0:00' : ''}
-                    </span>
-                    <div className="rounded-md h-2 flex mt-2 text-xs">
-                        <progress className="h-1 progressBar w-96" max="100" value={progress}></progress>
+                            {secondsPlayed ? convertSecondsToMinutes(secondsPlayed?.toFixed(0)) : video ? '0:00' : ''}
+                        </span>
+                        <div className="rounded-md h-2 flex mt-2 text-xs">
+                            <progress className="h-1 progressBar w-96" max="100" value={progress}></progress>
+                        </div>
+                        <span className="pt-1">
+                            {duration ? convertSecondsToMinutes(duration) : ''}
+                        </span>
                     </div>
-                    <span className="pt-1">
-                        {duration ? convertSecondsToMinutes(duration) : ''}
-                    </span>
-                </div>
+                }
             </div>
         </div>
     )
