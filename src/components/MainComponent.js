@@ -31,7 +31,6 @@ const MainComponent = ({ handleVideoChange, handleCategoryChange, currentCategor
                 }
             }, {});
             setSongsAndCategories(groupedSongs);
-            console.log('GROUP AND CATEGORY');
         }
     }, [categories, songs, currentCategory]);
 

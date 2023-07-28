@@ -52,7 +52,6 @@ const AddSong = ({ categories }) => {
                 currentSongs = [];
             } else { currentSongs = JSON.parse(currentSongs) }
 
-            console.log(currentSongs);
             // Check if a song with the same title already exists
             const titleAlreadyExists = currentSongs.some((song) => song.name === songTitleValue);
 

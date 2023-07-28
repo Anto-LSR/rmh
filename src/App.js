@@ -31,8 +31,8 @@ const App = () => {
     setPage(e)
   }
 
-  const handleSpacePress = () => {
-    if(document.activeElement.tagName !== 'INPUT')
+  const handleSpacePress = (e) => {
+    if(document.activeElement.tagName !== 'INPUT' && e.keyCode == 32)
       setSpacePressed(!spacePressed)
   }
 
@@ -89,7 +89,7 @@ const App = () => {
  
 
   return (
-    <div className="min-safe-h-screen max-w-screen overflow-x-hidden  bg-black-900 text-white flex flex-col inset-0 absolute">
+    <div className="min-safe-h-screen max-w-screen overflow-x-hidden  bg-black-900 text-white flex flex-col inset-0 absolute font-roboto">
       <div className="flex overflow-hidden "   >
         <Toaster toastOptions={{
           success: {

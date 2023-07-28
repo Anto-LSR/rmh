@@ -28,6 +28,12 @@ module.exports = withMT({
           950 : '#121212'
         }
       },
+      fontFamily: {
+        // Add your font families here
+        // For example, using a font named 'Roboto'
+        roboto: ['Roboto', 'sans-serif'],
+        borel: ['Borel', 'cursive'],
+      },
     },
   },
   plugins: [],

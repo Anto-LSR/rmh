@@ -67,7 +67,7 @@ const Footer = ({ video, handleNextSong, handlePreviousSong, spacePressed }) => 
                     <PlayerControls handlePlayPause={handlePlayPause} playing={playing} secondsPlayed={secondsPlayed} duration={duration} progress={progress} video={video} handleNextSong={handleNextSong} handlePreviousSong={handlePreviousSong} spacePressed={spacePressed} />
                 </div>
                 <div className="hidden lg:block">
-                    <VolumeControls volume={volume} muted={muted} handleVolumeChange={handleVolumeChange} handleMuteToggle={handleMuteToggle} />
+                    <VolumeControls volume={volume} muted={muted} handleVolumeChange={handleVolumeChange} handleMuteToggle={handleMuteToggle} video={video} />
                 </div>
             </div>
             <VideoPlayer video={video} playing={playing} muted={muted} volume={volume} handleProgress={handleProgress} handleDuration={handleDuration} />
